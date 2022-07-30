@@ -10,7 +10,7 @@ i64 jmp = 0;
 
 Read(&code, $code);
 
-while i < ($code)~i64 {
+while i < ($code)~i64 iter ++i {
 	c = [code,i];
 	if !c, break;
 	elif c == '>' {
@@ -28,10 +28,9 @@ while i < ($code)~i64 {
 	elif c == '[' {
 		if ![cells, ptr] {
 			++i;
-			while ( i < ($code)~i64 && (jmp || [code,i] != ']') ) {
+			while ( i < ($code)~i64 && (jmp || [code,i] != ']') ) iter ++i {
 				if [code,i] == '[', --jmp;
 				elif [code,i] == ']', ++jmp;
-				++i;
 			}
 			if i >= ($code)~i64, goto LBL_ERRCELLSEND;
 		}
@@ -39,15 +38,13 @@ while i < ($code)~i64 {
 	elif c == ']' {
 		if [cells, ptr] {
 			--i;
-			while ( i >= 0 && (jmp || [code,i] != '[') ) {
+			while ( i >= 0 && (jmp || [code,i] != '[') ) iter --i {
 				if [code,i] == '[', --jmp;
 				elif [code,i] == ']', ++jmp;
-				--i;
 			}
 			if i < 0, goto LBL_ERRCELLSSTART;
 		}
 	}
-	++i;
 }
 
 exit 0;
