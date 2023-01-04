@@ -10,7 +10,7 @@ i64 jmp = 0;
 
 Read(&code, $code);
 
-while i < ($code)~i64 iter ++i {
+while i < ($code)~i64 ; ++i {
 	c = [code,i];
 	if !c, break;
 	elif c == '>' {
@@ -28,7 +28,7 @@ while i < ($code)~i64 iter ++i {
 	elif c == '[' {
 		if ![cells, ptr] {
 			++i;
-			while ( i < ($code)~i64 && (jmp || [code,i] != ']') ) iter ++i {
+			while ( i < ($code)~i64 && (jmp || [code,i] != ']') ) ; ++i {
 				if [code,i] == '[', --jmp;
 				elif [code,i] == ']', ++jmp;
 			}
@@ -38,7 +38,7 @@ while i < ($code)~i64 iter ++i {
 	elif c == ']' {
 		if [cells, ptr] {
 			--i;
-			while ( i >= 0 && (jmp || [code,i] != '[') ) iter --i {
+			while ( i >= 0 && (jmp || [code,i] != '[') ) ; --i {
 				if [code,i] == '[', --jmp;
 				elif [code,i] == ']', ++jmp;
 			}
